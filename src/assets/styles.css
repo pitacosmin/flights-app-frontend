@@ -1,0 +1,59 @@
+.navbar {
+  /* background-color: #6e7a80; */
+  background: linear-gradient(to right, #075b60, #4b6f73 40%, #0f7074);
+  position: "fixed";
+  --bs-navbar-padding-y: 0rem;
+}
+
+/* Home styling */
+.home-container {
+  flex: 1 1 auto;
+  background-image: url("background-alternative.png");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* Flight booking css */
+.flight-booking-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f2f2f2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.booking-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  position: fixed;
+  top: 30%;
+  left: 5%;
+  z-index: 999;
+  max-width: 1100px;
+}
+
+.calendar-container {
+  background-color: #ffffff;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 0px 5px 5px 5px;
+  align-items: center;
+  padding: 5px;
+}
+
+.passengers-grid {
+  background-color: #ffffff;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 0px 5px 5px 0px;
+  align-items: center;
+  padding: 20px 20px 0px 20px;
+}
