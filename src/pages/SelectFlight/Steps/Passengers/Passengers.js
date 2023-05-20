@@ -6,6 +6,7 @@ import { ElmGreen } from "../../../../assets/colors";
 import { capitalize } from "../../../../utils/stringFormat";
 import { useDispatch } from "react-redux";
 import { setPassengers } from "../../../../redux/features/passengerSlice";
+import GoBackButton from "../../../../components/GoBackButton";
 
 const Passengers = ({ goToSeats, goBack, passengers, setPassengersData }) => {
   const [passengerData, setPassengerData] = useState([]);
@@ -62,14 +63,7 @@ const Passengers = ({ goToSeats, goBack, passengers, setPassengersData }) => {
         <TitleHeader></TitleHeader>
         <Box>{PassengerComponents}</Box>
         <Grid container justifyContent="space-between">
-          <Button
-            onClick={goBack}
-            size="large"
-            variant="contained"
-            sx={{ backgroundColor: ElmGreen }}
-          >
-            Go back
-          </Button>
+          <GoBackButton goBack={goBack} />
           <Button
             onClick={handleButtonClick}
             size="large"

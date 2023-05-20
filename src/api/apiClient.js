@@ -226,6 +226,39 @@ const getMetadataFromStripe = async (sessionId) => {
   }
 };
 
+const createReservation = async (email, price, flights, passengers) => {
+  try {
+    const response = await axios.post(
+      `${SERVER}/reservation/create`,
+      {
+        price: price,
+        email: email,
+        passengers: passengers,
+        flights: flights,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+const getFlightById = async (id) => {
+  try {
+    const response = await axios.get(`${SERVER}/flights/${id}`, {
+      headers: { "Content-Type": "application/json" },
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
 export {
   getOrigins,
   getDestinationsByOrigin,
@@ -241,4 +274,6 @@ export {
   createStripeCheckOut,
   getBasePriceByFlightId,
   getMetadataFromStripe,
+  createReservation,
+  getFlightById,
 };

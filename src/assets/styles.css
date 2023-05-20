@@ -57,3 +57,13 @@
   align-items: center;
   padding: 20px 20px 0px 20px;
 }
+
+.gradient_paper {
+  background: rgb(253, 253, 253);
+  background: linear-gradient(
+    5deg,
+    rgba(253, 253, 253, 1) 0%,
+    rgba(25, 141, 141, 1) 85%,
+    rgba(7, 91, 96, 1) 100%
+  );
+}
