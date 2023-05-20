@@ -1,45 +1,104 @@
 import { Grid } from "@mui/material";
+import OneSeat from "./OneSeat";
+import { useEffect, useState } from "react";
 
-const SeatMap = ({ departureSeats, returnSeats, layout, capacity }) => {
-  const seatsPerRow = layout.reduce((total, columns) => total + columns, 0);
+const rowStyle = {
+  display: "flex",
+  justifyContent: "center",
+  marginBottom: "10px",
+};
+
+const occupiedSeatStyle = {
+  width: "30px",
+  height: "30px",
+  backgroundColor: "lightgrey",
+  margin: "2px 2.5px",
+  borderRadius: "3px",
+};
+
+const seatStyle = {
+  width: "30px",
+  height: "30px",
+  backgroundColor: "#2980b9",
+  margin: "2px 2.5px",
+  borderRadius: "3px",
+  textAlign: "center",
+  color: "white",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const spacerStyle = {
+  textAlign: "center",
+  color: "grey",
+  width: "30px", // adjust this value to increase the space between columns
+  margin: "2px 2.5px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const SeatMap = ({
+  departureSeats,
+  returnSeats,
+  layout,
+  capacity,
+  passengers,
+}) => {
+  const numOfPassengers = passengers.length;
+  const seatsPerRow = layout.reduce((total, group) => total + group, 0);
   const numRows = Math.ceil(capacity / seatsPerRow);
 
-  const rowStyle = {
-    display: "flex",
-    justifyContent: "center",
-    marginBottom: "10px",
-  };
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
-  const seatStyle = {
-    width: "20px",
-    height: "20px",
-    backgroundColor: "gray",
-    marginRight: "5px",
-  };
+  useEffect(() => {
+    console.log(selectedSeats);
+  }, [selectedSeats]);
 
-  const spacerStyle = {
-    width: "20px", // adjust this value to increase the space between columns
+  const isSeatOccupied = (seatNumber) => {
+    return departureSeats.includes(seatNumber);
   };
 
   const seats = [];
 
   for (let i = 0; i < numRows; i++) {
+    //create the row
     const rowSeats = [];
 
     let colCount = 0;
-    layout.forEach((cols) => {
-      for (let j = 0; j < cols; j++) {
-        rowSeats.push(<div style={seatStyle} key={`${i}-${colCount}`} />);
+    layout.forEach((seatGroup) => {
+      for (let j = 0; j < seatGroup; j++) {
+        const seatNumber = `${i + 1}${String.fromCharCode(65 + colCount)}`;
+        if (isSeatOccupied(seatNumber)) {
+          rowSeats.push(
+            <OneSeat style={occupiedSeatStyle} key={`${i}-${colCount}`} />
+          );
+        } else {
+          rowSeats.push(
+            <OneSeat
+              style={seatStyle}
+              key={`${i}-${colCount}`}
+              seatLetter={String.fromCharCode(65 + colCount)}
+              index={i + 1}
+              setSelectedSeats={setSelectedSeats}
+              selectedSeats={selectedSeats}
+              numOfPassengers={numOfPassengers}
+            />
+          );
+        }
         colCount++;
       }
       if (colCount < seatsPerRow) {
         rowSeats.push(
-          <div style={spacerStyle} key={`${i}-${colCount}-spacer`} />
+          <div style={spacerStyle} key={`${i}-${colCount}-spacer`}>
+            {i + 1}
+          </div>
         );
-        colCount++;
       }
     });
 
+    //insert the whole row
     seats.push(
       <div style={rowStyle} key={i}>
         {rowSeats}

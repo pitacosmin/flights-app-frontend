@@ -27,13 +27,11 @@ const Seats = ({
   goBack,
   goToPayment,
 }) => {
-  const passengersRedux = useSelector(selectPassengers);
   const dispatch = useDispatch();
   const [departureSeats, setDepartureSeats] = useState([]);
   const [returnSeats, setReturnSeats] = useState([]);
   const [layout, setLayout] = useState([]);
   const [capacity, setCapacity] = useState([]);
-  // const [randomSeats, setRandomSeats] = useState([]);
 
   useEffect(() => {
     const fetchSeats = async () => {
@@ -113,6 +111,7 @@ const Seats = ({
                 capacity={capacity}
                 departureSeats={departureSeats}
                 returnSeats={returnSeats}
+                passengers={passengers}
               ></SeatMap>
               <PassangersSeatSelector
                 originCity={originCity}
