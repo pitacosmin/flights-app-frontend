@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const selectedSeatStyle = {
   width: "30px",
   height: "30px",
-  backgroundColor: "#e67e22",
+  backgroundColor: "#e67e22", //orange
   margin: "2px 2.5px",
   borderRadius: "3px",
   textAlign: "center",
@@ -23,6 +23,16 @@ const OneSeat = ({
 }) => {
   const seatNumber = index + seatLetter;
   const [isSeatSelected, setIsSeatSelected] = useState(false);
+
+  useEffect(() => {
+    console.log(seatNumber);
+    if (seatNumber) {
+      if (selectedSeats.includes(seatNumber)) {
+        setIsSeatSelected(true);
+      }
+    }
+  }, [selectedSeats]);
+
   const handleSelectSeat = () => {
     console.log(seatNumber);
 

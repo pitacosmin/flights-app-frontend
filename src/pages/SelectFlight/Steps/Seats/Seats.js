@@ -8,14 +8,11 @@ import {
   getAirplaneLayoutbyFlightId,
   getSeatsByFlightId,
 } from "../../../../api/apiClient";
-import SeatMap from "./SeatMap";
 import PassangersSeatSelector from "./PassangersSeatSelector";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addSeatNumbers,
-  selectPassengers,
-  setPassengers,
-} from "../../../../redux/features/passengerSlice";
+import { useDispatch } from "react-redux";
+import { addSeatNumbers } from "../../../../redux/features/passengerSlice";
+import DepartureSeatMap from "./DepartureSeatMap";
+import ReturnSeatMap from "./ReturnSeatMap";
 
 const Seats = ({
   passengers,
@@ -30,8 +27,14 @@ const Seats = ({
   const dispatch = useDispatch();
   const [departureSeats, setDepartureSeats] = useState([]);
   const [returnSeats, setReturnSeats] = useState([]);
-  const [layout, setLayout] = useState([]);
-  const [capacity, setCapacity] = useState([]);
+  const [deparuteLayout, setDepartureLayout] = useState([]);
+  const [departureCapacity, setDepartureCapacity] = useState([]);
+  const [returnLayout, setReturnLayout] = useState([]);
+  const [returnCapacity, setReturnCapacity] = useState([]);
+  const [isReturnSelected, setIsReturnSelected] = useState(false);
+
+  const [selectedDepartureSeats, setSelectedDepartureSeats] = useState([]);
+  const [selectedReturnSeats, setSelectedReturnSeats] = useState([]);
 
   useEffect(() => {
     const fetchSeats = async () => {
@@ -44,16 +47,25 @@ const Seats = ({
       }
     };
 
-    const fetchAirplaneInfo = async () => {
+    const fetchDepartureAirplaneInfo = async () => {
       const layoutData = await getAirplaneLayoutbyFlightId(departureTicket);
-      setLayout(layoutData);
+      setDepartureLayout(layoutData);
 
       const capacityData = await getAirplaneCapacitybyFlightId(departureTicket);
-      setCapacity(capacityData);
+      setDepartureCapacity(capacityData);
+    };
+
+    const fetchReturnAirplaneInfo = async () => {
+      const layoutData = await getAirplaneLayoutbyFlightId(returnTicket);
+      setReturnLayout(layoutData);
+
+      const capacityData = await getAirplaneCapacitybyFlightId(returnTicket);
+      setReturnCapacity(capacityData);
     };
 
     fetchSeats();
-    fetchAirplaneInfo();
+    fetchDepartureAirplaneInfo();
+    fetchReturnAirplaneInfo();
   }, []);
 
   const handleButtonClick = () => {
@@ -102,23 +114,38 @@ const Seats = ({
   return (
     <Box>
       <Grid item xs={12}>
-        <TitleHeader />
+        <TitleHeader handleRandomSeatsPicker={handleRandomSeatsPicker} />
         <Box>
           <Paper>
-            <Grid container direction="row">
-              <SeatMap
-                layout={layout}
-                capacity={capacity}
-                departureSeats={departureSeats}
-                returnSeats={returnSeats}
-                passengers={passengers}
-              ></SeatMap>
+            <Grid container direction="row" padding={"50px 0px"}>
+              {!isReturnSelected ? (
+                <DepartureSeatMap
+                  layout={deparuteLayout}
+                  capacity={departureCapacity}
+                  occupiedSeats={departureSeats}
+                  passengers={passengers}
+                  setPassengers={setPassengers}
+                  selectedDepartureSeats={selectedDepartureSeats}
+                  setSelectedDepartureSeats={setSelectedDepartureSeats}
+                ></DepartureSeatMap>
+              ) : (
+                <ReturnSeatMap
+                  layout={returnLayout}
+                  capacity={returnCapacity}
+                  occupiedSeats={returnSeats}
+                  passengers={passengers}
+                  setPassengers={setPassengers}
+                  selectedReturnSeats={selectedReturnSeats}
+                  setSelectedReturnSeats={setSelectedReturnSeats}
+                ></ReturnSeatMap>
+              )}
               <PassangersSeatSelector
                 originCity={originCity}
                 destinationCity={destinationCity}
                 returnTicket={returnTicket}
                 passengers={passengers}
-                handleRandomSeatsPicker={handleRandomSeatsPicker}
+                setIsReturnSelected={setIsReturnSelected}
+                isReturnSelected={isReturnSelected}
               ></PassangersSeatSelector>
             </Grid>
           </Paper>

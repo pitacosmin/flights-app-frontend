@@ -19,7 +19,7 @@ const occupiedSeatStyle = {
 const seatStyle = {
   width: "30px",
   height: "30px",
-  backgroundColor: "#2980b9",
+  backgroundColor: "#2980b9", //blue
   margin: "2px 2.5px",
   borderRadius: "3px",
   textAlign: "center",
@@ -39,25 +39,42 @@ const spacerStyle = {
   justifyContent: "center",
 };
 
-const SeatMap = ({
-  departureSeats,
-  returnSeats,
+const ReturnSeatMap = ({
+  occupiedSeats,
   layout,
   capacity,
   passengers,
+  setPassengers,
+  selectedReturnSeats,
+  setSelectedReturnSeats,
 }) => {
   const numOfPassengers = passengers.length;
   const seatsPerRow = layout.reduce((total, group) => total + group, 0);
   const numRows = Math.ceil(capacity / seatsPerRow);
 
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  //   const [selectedReturnSeats, setSelectedReturnSeats] = useState([]);
 
   useEffect(() => {
-    console.log(selectedSeats);
-  }, [selectedSeats]);
+    console.log("return seatts", selectedReturnSeats);
+  }, [selectedReturnSeats]);
+
+  useEffect(() => {
+    console.log("passengers", passengers);
+  }, [passengers]);
+
+  useEffect(() => {
+    const updatedSeatsForPassengers = passengers.map((passenger, index) => {
+      return {
+        ...passenger,
+        returnSeatNumber: selectedReturnSeats[index],
+      };
+    });
+
+    setPassengers(updatedSeatsForPassengers);
+  }, [selectedReturnSeats]);
 
   const isSeatOccupied = (seatNumber) => {
-    return departureSeats.includes(seatNumber);
+    return occupiedSeats.includes(seatNumber);
   };
 
   const seats = [];
@@ -81,8 +98,8 @@ const SeatMap = ({
               key={`${i}-${colCount}`}
               seatLetter={String.fromCharCode(65 + colCount)}
               index={i + 1}
-              setSelectedSeats={setSelectedSeats}
-              selectedSeats={selectedSeats}
+              setSelectedSeats={setSelectedReturnSeats}
+              selectedSeats={selectedReturnSeats}
               numOfPassengers={numOfPassengers}
             />
           );
@@ -107,10 +124,10 @@ const SeatMap = ({
   }
 
   return (
-    <Grid item xs={7}>
+    <Grid item xs={6}>
       {seats}
     </Grid>
   );
 };
 
-export default SeatMap;
+export default ReturnSeatMap;

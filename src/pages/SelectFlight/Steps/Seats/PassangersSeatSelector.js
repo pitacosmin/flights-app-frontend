@@ -9,18 +9,25 @@ const PassangersSeatSelector = ({
   destinationCity,
   returnTicket,
   passengers,
-  handleRandomSeatsPicker,
+  setIsReturnSelected,
+  isReturnSelected,
 }) => {
   const [searchParams] = useSearchParams();
   const { origin, destination } = Object.fromEntries(searchParams.entries());
+
+  const goToNextFlight = () => {
+    setIsReturnSelected(true);
+  };
+
+  const goToPreviousFlight = () => {
+    setIsReturnSelected(false);
+  };
+
   return (
-    <Grid item xs={5}>
-      <Button fullWidth variant="contained" onClick={handleRandomSeatsPicker}>
-        Continue without selecting seats
-      </Button>
+    <Grid item xs={6}>
       <RouteTitle
-        originCity={originCity}
-        destinationCity={destinationCity}
+        originCity={!isReturnSelected ? originCity : destinationCity}
+        destinationCity={!isReturnSelected ? destinationCity : originCity}
       ></RouteTitle>
       <Grid item xs={11}>
         <PassengersTable
@@ -28,6 +35,7 @@ const PassangersSeatSelector = ({
           origin={origin}
           destination={destination}
           returnTicket={returnTicket}
+          isReturnSelected={isReturnSelected}
         ></PassengersTable>
       </Grid>
       <Grid
@@ -35,9 +43,15 @@ const PassangersSeatSelector = ({
         direction={"row"}
         item
         xs={11}
-        justifyContent={"flex-end"}
+        justifyContent={isReturnSelected ? "flex-start" : "flex-end"}
       >
-        <Button>Next flight</Button>
+        {isReturnSelected ? (
+          <Button onClick={goToPreviousFlight}>Previous flight</Button>
+        ) : null}
+
+        {!isReturnSelected ? (
+          <Button onClick={goToNextFlight}>Next flight</Button>
+        ) : null}
       </Grid>
     </Grid>
   );

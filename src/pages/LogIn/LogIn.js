@@ -26,9 +26,6 @@ const style = {
 };
 
 const LogIn = ({ handleClose, open, handleSwitch }) => {
-  //remove
-  const refresh = useRefreshToken();
-
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [password, setPassword] = useState("");
@@ -129,7 +126,6 @@ const LogIn = ({ handleClose, open, handleSwitch }) => {
               text="Register"
             />
           </form>
-          <button onClick={() => refresh()}>Refresh</button>
         </Box>
       </Modal>
     </div>

@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Grid,
   Paper,
   Table,
@@ -12,10 +13,16 @@ import {
 } from "@mui/material";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 
-const PassengersTable = ({ passengers, origin, destination, returnTicket }) => {
+const PassengersTable = ({
+  passengers,
+  origin,
+  destination,
+  returnTicket,
+  isReturnSelected,
+}) => {
   return (
     <TableContainer component={Paper}>
-      <Table bgcolor="#F4F4F4">
+      <Table bgcolor="#FDFDFD">
         <TableHead>
           <TableRow>
             <TableCell>Passengers</TableCell>
@@ -50,9 +57,92 @@ const PassengersTable = ({ passengers, origin, destination, returnTicket }) => {
                   {passenger.firstName} {passenger.lastName}
                 </Grid>
               </TableCell>
-              <TableCell align="center">Please select seat number</TableCell>
+              <TableCell
+                style={{
+                  backgroundColor: !isReturnSelected ? "#e2f4ff" : "#FDFDFD",
+                }}
+              >
+                <Grid
+                  container
+                  direction={"row"}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                >
+                  {passenger.departureSeatNumber ? (
+                    <Box
+                      color={"white"}
+                      bgcolor={"#e67e22"}
+                      sx={{
+                        height: "50px",
+                        width: "50px",
+                        border: "2px dashed lightgrey",
+                        borderTopLeftRadius: "5px",
+                        borderTopRightRadius: "5px",
+                      }}
+                      display={"flex"}
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                    >
+                      {passenger.departureSeatNumber}
+                    </Box>
+                  ) : (
+                    <Box
+                      bgcolor={"white"}
+                      sx={{
+                        height: "50px",
+                        width: "50px",
+                        border: "2px dashed lightgrey",
+                        borderTopLeftRadius: "5px",
+                        borderTopRightRadius: "5px",
+                      }}
+                    ></Box>
+                  )}
+                </Grid>
+              </TableCell>
               {returnTicket ? (
-                <TableCell align="center">Please select seat number</TableCell>
+                <TableCell
+                  align="center"
+                  style={{
+                    backgroundColor: isReturnSelected ? "#e2f4ff" : "#FDFDFD",
+                  }}
+                >
+                  <Grid
+                    container
+                    direction={"row"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                  >
+                    {passenger.returnSeatNumber ? (
+                      <Box
+                        color={"white"}
+                        bgcolor={"#e67e22"}
+                        sx={{
+                          height: "50px",
+                          width: "50px",
+                          border: "2px dashed lightgrey",
+                          borderTopLeftRadius: "5px",
+                          borderTopRightRadius: "5px",
+                        }}
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                      >
+                        {passenger.returnSeatNumber}
+                      </Box>
+                    ) : (
+                      <Box
+                        bgcolor={"white"}
+                        sx={{
+                          height: "50px",
+                          width: "50px",
+                          border: "2px dashed lightgrey",
+                          borderTopLeftRadius: "5px",
+                          borderTopRightRadius: "5px",
+                        }}
+                      ></Box>
+                    )}
+                  </Grid>
+                </TableCell>
               ) : null}
             </TableRow>
           ))}

@@ -67,7 +67,7 @@ const Payment = ({ goBack, passengers, totalPrice }) => {
     console.log(returnDate);
   }, [departureFlight?.departureDate, returnFlight?.departureDate]);
 
-  console.log(passengers);
+  console.log("passengers", passengers);
   const handlePayClick = async () => {
     const stripe = await stripePromise;
     const stripeSessionId = await createStripeCheckOut(
