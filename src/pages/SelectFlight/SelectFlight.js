@@ -126,6 +126,7 @@ const SelectFlight = () => {
           departurePrice={departurePrice}
           returnPrice={returnPrice}
           totalPrice={totalPrice}
+          setTotalPrice={setTotalPrice}
         ></HorizontalStepper>
       </Grid>
     </SelectFlightBody>

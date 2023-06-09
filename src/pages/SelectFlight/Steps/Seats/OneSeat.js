@@ -25,7 +25,6 @@ const OneSeat = ({
   const [isSeatSelected, setIsSeatSelected] = useState(false);
 
   useEffect(() => {
-    console.log(seatNumber);
     if (seatNumber) {
       if (selectedSeats.includes(seatNumber)) {
         setIsSeatSelected(true);
@@ -37,13 +36,22 @@ const OneSeat = ({
     console.log(seatNumber);
 
     if (isSeatSelected) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatNumber));
+      setSelectedSeats(
+        selectedSeats.map((seat) => (seat === seatNumber ? null : seat))
+      );
     } else {
       if (selectedSeats.length < numOfPassengers) {
         setSelectedSeats([...selectedSeats, seatNumber]);
       } else {
-        console.log("Cannot select anymore");
-        return;
+        const nullIndex = selectedSeats.indexOf(null);
+        if (nullIndex !== -1) {
+          const updatedSeats = [...selectedSeats];
+          updatedSeats[nullIndex] = seatNumber;
+          setSelectedSeats(updatedSeats);
+        } else {
+          console.log("Cannot select anymore");
+          return;
+        }
       }
     }
 

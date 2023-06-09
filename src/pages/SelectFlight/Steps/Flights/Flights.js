@@ -22,6 +22,7 @@ const Flights = ({
   returnPrice,
   passengers,
   totalPrice,
+  setTotalPrice,
 }) => {
   const user = useSelector(selectUser);
 
@@ -73,6 +74,7 @@ const Flights = ({
           returnPrice={returnPrice}
           goToPassengers={handleGoToPassangers}
           totalPrice={totalPrice}
+          setTotalPrice={setTotalPrice}
         ></Fares>
       )}
       <Snackbar

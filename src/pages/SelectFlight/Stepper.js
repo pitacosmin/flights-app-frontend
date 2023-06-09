@@ -31,6 +31,7 @@ const HorizontalStepper = ({
   setReturnPrice,
   returnPrice,
   totalPrice,
+  setTotalPrice,
 }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [passengersData, setPassengersData] = useState([]);
@@ -61,6 +62,7 @@ const HorizontalStepper = ({
             returnPrice={returnPrice}
             passengers={passengers}
             totalPrice={totalPrice}
+            setTotalPrice={setTotalPrice}
           />
         );
       case 1:

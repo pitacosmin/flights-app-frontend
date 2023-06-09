@@ -12,6 +12,9 @@ import BackpackIcon from "@mui/icons-material/Backpack";
 import FlightClassIcon from "@mui/icons-material/FlightClass";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import EventBusyIcon from "@mui/icons-material/EventBusy";
+import { useDispatch, useSelector } from "react-redux";
+import { setFlight } from "../../../../redux/features/flightSlice";
+import { selectUser } from "../../../../redux/features/userSlice";
 
 const HeaderGrid = styled(Grid)`
   display: flex;
@@ -38,7 +41,9 @@ const FareCard = ({
   planColor,
   goToPassengers,
   totalPrice,
+  setTotalPrice,
 }) => {
+  const user = useSelector(selectUser);
   const iconProps = {
     fontSize: "large",
     sx: { color: planColor },
@@ -79,9 +84,19 @@ const FareCard = ({
 
   const visibleBenefits = benefits.slice(0, numBenefitsToShow);
 
+  const dispatch = useDispatch();
+
   //TODO Handle the selection of benefit
   const handleSelectBenefit = () => {
     goToPassengers();
+    if (user?.isAuthenticated) {
+      setTotalPrice(totalPrice);
+      dispatch(
+        setFlight({
+          totalPrice: totalPrice,
+        })
+      );
+    }
   };
 
   return (

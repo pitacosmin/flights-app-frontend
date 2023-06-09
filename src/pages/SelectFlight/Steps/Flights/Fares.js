@@ -10,11 +10,26 @@ const InfoGrid = styled(Grid)`
   padding: 20px 30px;
 `;
 
-const Fares = ({ goToPassengers, totalPrice }) => {
+const Fares = ({ goToPassengers, totalPrice, setTotalPrice }) => {
   const plans = [
-    { name: "Basic", description: "Travel light", color: "grey" },
-    { name: "Regular", description: "Short trips", color: "blue" },
-    { name: "Premium", description: "Full comfort", color: "yellow" },
+    {
+      name: "Basic",
+      description: "Travel light",
+      color: "grey",
+      benefitPrice: totalPrice,
+    },
+    {
+      name: "Regular",
+      description: "Short trips",
+      color: "#19456b",
+      benefitPrice: totalPrice * 1.2,
+    },
+    {
+      name: "Premium",
+      description: "Full comfort",
+      color: "#F7D31D",
+      benefitPrice: totalPrice * 1.5,
+    },
   ];
   return (
     <Grid item xs={12} style={{ padding: "50px 0px" }}>
@@ -30,7 +45,8 @@ const Fares = ({ goToPassengers, totalPrice }) => {
               headerTitle={plan.description}
               planColor={plan.color}
               goToPassengers={goToPassengers}
-              totalPrice={totalPrice}
+              totalPrice={plan.benefitPrice}
+              setTotalPrice={setTotalPrice}
             ></FareCard>
           ))}
         </InfoGrid>

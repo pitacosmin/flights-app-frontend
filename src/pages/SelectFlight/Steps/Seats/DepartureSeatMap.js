@@ -52,8 +52,6 @@ const DepartureSeatMap = ({
   const seatsPerRow = layout.reduce((total, group) => total + group, 0);
   const numRows = Math.ceil(capacity / seatsPerRow);
 
-  //   const [selectedDepartureSeats, setSelectedDepartureSeats] = useState([]);
-
   useEffect(() => {
     console.log("departure seats", selectedDepartureSeats);
   }, [selectedDepartureSeats]);

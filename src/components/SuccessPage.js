@@ -25,16 +25,22 @@ function SuccessPage() {
   }, []);
 
   useEffect(() => {
+    console.log(reservationData);
+  }, [reservationData]);
+  // console.log(reservationData?.reservationId);
+
+  useEffect(() => {
     if (metadata && !reservationCreated) {
-      const price = (parseFloat(metadata.price) / 100).toLocaleString("en-US", {
+      const price = (parseFloat(metadata.price) / 100).toLocaleString("en", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
       setTotalPrice(price);
+      let priceToSendToRequest = (metadata.price / 100).toFixed(2);
       const postData = async () => {
         const data = await createReservation(
           metadata.email,
-          price,
+          priceToSendToRequest,
           metadata.flights,
           metadata.passengers
         );
