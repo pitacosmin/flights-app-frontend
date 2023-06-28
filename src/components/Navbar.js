@@ -19,13 +19,16 @@ import RoutesMap from "../pages/RoutesMap/RoutesMap";
 import SignUp from "../pages/SignUp/SignUp";
 import LogIn from "../pages/LogIn/LogIn";
 import SelectFlight from "../pages/SelectFlight/SelectFlight";
-import MapTwoToneIcon from "@mui/icons-material/MapTwoTone";
+// import MapTwoToneIcon from "@mui/icons-material/MapTwoTone";
+import MapIcon from "../assets/map.png";
+import WorldIcon from "../assets/world.png";
 import "../assets/styles.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../redux/features/userSlice";
 import PersistLogin from "../pages/LogIn/PersistLogin";
 import SuccessPage from "./SuccessPage";
+import BookingHistory from "../pages/BookingHistory/BookingHistory";
 
 function ResponsiveAppBar() {
   // const [anchorElNav, setAnchorElNav] = useState(null);
@@ -105,56 +108,20 @@ function ResponsiveAppBar() {
             >
               <Link style={{ textDecoration: "none", color: "white" }} to="/">
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <MapTwoToneIcon
-                    sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+                  <img
+                    src={WorldIcon}
+                    alt="World Icon"
+                    style={{
+                      maxHeight: "50px",
+                      maxWidth: "50px",
+                      marginRight: "5px",
+                    }}
                   />
                   <span>Home</span>
                 </div>
               </Link>
             </Typography>
 
-            {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                openModal={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: "block", md: "none" },
-                }}
-              >
-                {Object.entries(pagesMap).map(([pageTitle, pagePath]) => (
-                  <MenuItem key={pageTitle} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">
-                      <CustomLink to={`/${pagePath}`}>{pageTitle}</CustomLink>
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box> */}
-
-            <MapTwoToneIcon
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            />
             <Typography
               variant="h5"
               noWrap
@@ -190,14 +157,6 @@ function ResponsiveAppBar() {
                 }
                 spacing={2}
               >
-                <Button sx={{ my: 2, color: "white", display: "block" }}>
-                  <Link
-                    style={{ textDecoration: "none", color: "white" }}
-                    to="/routes-map"
-                  >
-                    Routes map
-                  </Link>
-                </Button>
                 {isUserAuthenticated ? (
                   <Button sx={{ my: 2, color: "white", display: "block" }}>
                     <Link
@@ -288,10 +247,9 @@ function ResponsiveAppBar() {
       <Routes>
         <Route element={<PersistLogin />}>
           <Route exact path="" element={<Home />} />
-          <Route exact path="routes-map" element={<RoutesMap />} />
-          <Route path="booking-history" element={<RoutesMap />} />
+          <Route path="booking-history" element={<BookingHistory />} />
           <Route path="select-flights" element={<SelectFlight />} />
-          <Route path="payment-success" element={<SuccessPage />}></Route>
+          <Route path="payment-success" element={<SuccessPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

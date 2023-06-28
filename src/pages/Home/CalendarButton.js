@@ -1,4 +1,4 @@
-import { CalendarMonth } from "@mui/icons-material";
+import CalendarMonth from "../../assets/calendar.png";
 import { Button, Grid, Paper } from "@mui/material";
 import React from "react";
 import { customToLocaleDateString } from "../../utils/formatDates";
@@ -11,7 +11,10 @@ const CalendarButton = ({
 }) => {
   return (
     <Grid item xs={12} id="date-picker-button">
-      <Paper elevation={showCalendar ? 2 : 0}>
+      <Paper
+        elevation={showCalendar ? 2 : 0}
+        style={{ border: "solid 2px lightgrey" }}
+      >
         <Button
           size="large"
           variant="filledTonal"
@@ -20,7 +23,11 @@ const CalendarButton = ({
           style={{ textTransform: "none", padding: 5, height: "7vh" }}
         >
           <Grid item xs={2}>
-            <CalendarMonth />
+            <img
+              src={CalendarMonth}
+              alt="calendar"
+              style={{ maxHeight: "40px", maxWidth: "40px" }}
+            />
           </Grid>
           <Grid item xs={4}>
             {departureDate

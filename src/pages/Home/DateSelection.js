@@ -44,13 +44,18 @@ const DateSelection = ({
                   color: SurfieGreen,
                 }}
               />
-              <>Select return date</>
+              <>
+                Select return date{" "}
+                <div style={{ color: "grey", paddingLeft: "5px" }}>
+                  (optional)
+                </div>
+              </>
             </Stack>
             <Divider flexItem style={{ backgroundColor: "black" }} />
             <Calendar
               onChange={(item) => setReturnDate(item)}
               date={returnDate}
-              minDate={new Date(departureDate)}
+              minDate={departureDate ? new Date(departureDate) : new Date()}
               disabledDates={disabledArrivalDates}
               dateDisplayFormat="d MMM yyyy"
               weekStartsOn={1}

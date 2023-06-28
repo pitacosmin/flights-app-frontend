@@ -1,6 +1,7 @@
 import React from "react";
 import { styled, Grid, Divider, Typography } from "@mui/material";
 import FlightIcon from "@mui/icons-material/Flight";
+import Plane from "../../../../assets/plane.png";
 import { formatTimeDifference } from "../../../../utils/formatDates";
 
 const ColumnGrid = styled(Grid)`
@@ -15,8 +16,17 @@ const Duration = ({ departureTime, arrivalTime, isReturn }) => {
     <ColumnGrid item xs={8}>
       <Grid item xs={12}>
         <Divider flexItem>
-          <FlightIcon
+          {/* <FlightIcon
             style={{ transform: isReturn ? "rotate(-90deg)" : "rotate(90deg)" }}
+          /> */}
+          <img
+            src={Plane}
+            alt="plane-icon"
+            style={{
+              transform: isReturn ? "scaleX(-1)" : "rotate(0deg)",
+              maxHeight: "40px",
+              maxWidth: "40px",
+            }}
           />
         </Divider>
         <Typography>

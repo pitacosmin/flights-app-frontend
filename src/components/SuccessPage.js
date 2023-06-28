@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
-import { createReservation, getMetadataFromStripe } from "../api/apiClient";
+import { getMetadataFromStripe } from "../api/apiClient";
 import PassengersTable from "./PassengersTable";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { LightLateGrey } from "../assets/colors";
+import { createReservation } from "../api/protectedApiClient";
 
 function SuccessPage() {
   const [metadata, setMetadata] = useState(null);

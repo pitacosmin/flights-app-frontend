@@ -3,16 +3,18 @@ import TitleHeader from "./TitleHeader";
 import BottomButtons from "./BottomButtons";
 import { useEffect, useState } from "react";
 import {
-  generateRandomSeatsByNumOfPassengers,
   getAirplaneCapacitybyFlightId,
   getAirplaneLayoutbyFlightId,
-  getSeatsByFlightId,
 } from "../../../../api/apiClient";
 import PassangersSeatSelector from "./PassangersSeatSelector";
 import { useDispatch } from "react-redux";
 import { addSeatNumbers } from "../../../../redux/features/passengerSlice";
 import DepartureSeatMap from "./DepartureSeatMap";
 import ReturnSeatMap from "./ReturnSeatMap";
+import {
+  generateRandomSeatsByNumOfPassengers,
+  getSeatsByFlightId,
+} from "../../../../api/protectedApiClient";
 
 const Seats = ({
   passengers,

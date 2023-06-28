@@ -1,7 +1,12 @@
 import { Autocomplete, Grid, Typography, Divider, Paper } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { CustomTextField } from "./CustomAutocomplete.style";
-import { useState } from "react";
+import styled from "@emotion/styled";
+
+const StyledAutocomplete = styled(Autocomplete)`
+  padding: 5px 0px;
+  margin-bottom: 5px;
+`;
 
 function CustomAutocomplete({ value, options, handleDataChange, labelText }) {
   const filterOptions = (options, { inputValue }) => {
@@ -17,7 +22,8 @@ function CustomAutocomplete({ value, options, handleDataChange, labelText }) {
   };
 
   return (
-    <Autocomplete
+    <StyledAutocomplete
+      // className="linear_border"
       value={value}
       options={options}
       onChange={handleDataChange}
@@ -59,7 +65,7 @@ function CustomAutocomplete({ value, options, handleDataChange, labelText }) {
               <Grid item xs>
                 <Typography
                   fontStyle={"italic"}
-                  color={"#333333"}
+                  color={"grey"}
                   fontSize={"14px"}
                 >
                   {option.countryName}
@@ -73,7 +79,11 @@ function CustomAutocomplete({ value, options, handleDataChange, labelText }) {
         );
       }}
       renderInput={(params) => (
-        <Paper sx={{ paddingTop: 1, bgcolor: "#FDFDFD" }} elevation={0}>
+        <Paper
+          sx={{ paddingTop: 1, bgcolor: "#FDFDFD" }}
+          elevation={0}
+          style={{ border: "solid 2px lightgrey" }}
+        >
           <CustomTextField {...params} label={labelText} variant="outlined" />
         </Paper>
       )}

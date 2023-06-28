@@ -145,6 +145,7 @@ const Payment = ({ goBack, passengers, totalPrice }) => {
               date={returnDate}
               flights={flights}
               price={flights?.returnPrice}
+              isReturn={true}
             ></PassengersFares>
             <Grid item xs={12}>
               <Accordion style={{ boxShadow: "none", borderRadius: "0" }}>
@@ -168,7 +169,7 @@ const Payment = ({ goBack, passengers, totalPrice }) => {
             </Grid>
             <Grid item xs={12}>
               <Paper
-                style={{ backgroundColor: "lightgray", padding: "10px 20px" }}
+                style={{ backgroundColor: "#F5F5F5", padding: "10px 20px" }}
               >
                 <Grid
                   container

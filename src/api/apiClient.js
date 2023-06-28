@@ -1,6 +1,12 @@
 import axios from "axios";
 import { SERVER } from "../data/constants";
 
+const accessToken = document.cookie
+  .split("; ")
+  .find((row) => row.startsWith("accessToken="))
+  .split("=")[1];
+console.log("access token", accessToken);
+
 const getOrigins = async () => {
   try {
     const response = await axios.get(`${SERVER}/airports/getOrigins`);
@@ -118,17 +124,84 @@ const register = async (email, password) => {
   }
 };
 
-const getSeatsByFlightId = async (flightId) => {
-  try {
-    const response = await axios.get(`${SERVER}/seats/flight/${flightId}`, {
-      headers: { "Content-Type": "application/json" },
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+const refresh = async () => {
+  const response = await axios.get(`${SERVER}/api/auth/token/refresh`, {
+    withCredentials: true,
+  });
+  const prevAccessToken = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("accessToken="))
+    .split("=")[1];
+  console.log("PREVIOUS token", prevAccessToken);
+  console.log("NEW token", response.data.accessToken);
+  document.cookie = `accessToken=${response.data.accessToken}`;
+  return response.data.accessToken;
 };
+
+// const setupRequestInterceptors = (accessToken) => {
+//   return axiosPrivate.interceptors.request.use(
+//     (config) => {
+//       if (!config.headers["Authorization"]) {
+//         config.headers["Authorization"] = `Bearer ${accessToken}`;
+//       }
+//       return config;
+//     },
+//     (error) => Promise.reject(error)
+//   );
+// };
+
+// const setupResponseInterceptors = (refresh) => {
+//   return axiosPrivate.interceptors.response.use(
+//     (response) => response,
+//     async (error) => {
+//       const prevRequest = error?.config;
+//       if (error?.response?.status === 403 && !prevRequest?.sent) {
+//         prevRequest.sent = true;
+//         const newAccessToken = await refresh();
+//         prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+//         return axiosPrivate(prevRequest);
+//       }
+//       return Promise.reject(error);
+//     }
+//   );
+// };
+
+// const getAccessToken = () => {
+//   const accessTokenCookie = document.cookie
+//     .split("; ")
+//     .find((row) => row.startsWith("accessToken="));
+
+//   if (accessTokenCookie) {
+//     return accessTokenCookie.split("=")[1];
+//   }
+
+//   return null;
+// };
+
+// const getSeatsByFlightId = async (flightId) => {
+//   const accessToken = getAccessToken();
+//   const requestInterceptor = setupRequestInterceptors(accessToken);
+//   const responseInterceptor = setupResponseInterceptors(refresh);
+
+//   try {
+//     const response = await axiosPrivate.get(
+//       `${SERVER}/seats/flight/${flightId}`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${accessToken}`,
+//         },
+//       }
+//     );
+//     return response.data;
+//   } catch (error) {
+//     console.log(error);
+//     return null;
+//   } finally {
+//     // Clean up the interceptors
+//     axiosPrivate.interceptors.request.eject(requestInterceptor);
+//     axiosPrivate.interceptors.response.eject(responseInterceptor);
+//   }
+// };
 
 const getAirplaneLayoutbyFlightId = async (flightId) => {
   try {
@@ -160,23 +233,35 @@ const getAirplaneCapacitybyFlightId = async (flightId) => {
   }
 };
 
-const generateRandomSeatsByNumOfPassengers = async (
-  flightId,
-  numOfPassengers
-) => {
-  try {
-    const response = await axios.get(
-      `${SERVER}/seats/${flightId}/generate/${numOfPassengers}/seats`,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
+// const generateRandomSeatsByNumOfPassengers = async (
+//   flightId,
+//   numOfPassengers
+// ) => {
+//   const accessToken = getAccessToken();
+//   const requestInterceptor = setupRequestInterceptors(accessToken);
+//   const responseInterceptor = setupResponseInterceptors(refresh);
+
+//   try {
+//     const response = await axiosPrivate.get(
+//       `${SERVER}/seats/${flightId}/generate/${numOfPassengers}/seats`,
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${accessToken}`,
+//         },
+//       }
+//     );
+//     return response.data;
+//   } catch (error) {
+//     console.log(error);
+//     return null;
+//   } finally {
+//     // Clean up the interceptors
+//     axiosPrivate.interceptors.request.eject(requestInterceptor);
+//     axiosPrivate.interceptors.response.eject(responseInterceptor);
+//   }
+// };
+
 const createStripeCheckOut = async (price, email, passengers, flights) => {
   try {
     const response = await axios.post(
@@ -226,26 +311,37 @@ const getMetadataFromStripe = async (sessionId) => {
   }
 };
 
-const createReservation = async (email, price, flights, passengers) => {
-  try {
-    const response = await axios.post(
-      `${SERVER}/reservation/create`,
-      {
-        price: price,
-        email: email,
-        passengers: passengers,
-        flights: flights,
-      },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    return response.data;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
+// const createReservation = async (email, price, flights, passengers) => {
+//   const accessToken = getAccessToken();
+//   const requestInterceptor = setupRequestInterceptors(accessToken);
+//   const responseInterceptor = setupResponseInterceptors(refresh);
+
+//   try {
+//     const response = await axiosPrivate.post(
+//       `${SERVER}/reservation/create`,
+//       {
+//         price: price,
+//         email: email,
+//         passengers: passengers,
+//         flights: flights,
+//       },
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${accessToken}`,
+//         },
+//       }
+//     );
+//     return response.data;
+//   } catch (err) {
+//     console.error(err);
+//     return null;
+//   } finally {
+//     // Clean up the interceptors
+//     axiosPrivate.interceptors.request.eject(requestInterceptor);
+//     axiosPrivate.interceptors.response.eject(responseInterceptor);
+//   }
+// };
 
 const getFlightById = async (id) => {
   try {
@@ -259,6 +355,29 @@ const getFlightById = async (id) => {
   }
 };
 
+// const getReservationsByUser = async () => {
+//   const accessToken = getAccessToken();
+//   const requestInterceptor = setupRequestInterceptors(accessToken);
+//   const responseInterceptor = setupResponseInterceptors(refresh);
+
+//   try {
+//     const response = await axiosPrivate.get(`${SERVER}/reservation/history`, {
+//       withCredentials: true,
+//       headers: {
+//         Authorization: `Bearer ${accessToken}`,
+//       },
+//     });
+//     return response.data;
+//   } catch (err) {
+//     console.error(err);
+//     return null;
+//   } finally {
+//     // Clean up the interceptors
+//     axiosPrivate.interceptors.request.eject(requestInterceptor);
+//     axiosPrivate.interceptors.response.eject(responseInterceptor);
+//   }
+// };
+
 export {
   getOrigins,
   getDestinationsByOrigin,
@@ -267,13 +386,14 @@ export {
   authenticate,
   register,
   getUserByEmail,
-  getSeatsByFlightId,
+  // getSeatsByFlightId,
   getAirplaneLayoutbyFlightId,
   getAirplaneCapacitybyFlightId,
-  generateRandomSeatsByNumOfPassengers,
+  // generateRandomSeatsByNumOfPassengers,
   createStripeCheckOut,
   getBasePriceByFlightId,
   getMetadataFromStripe,
-  createReservation,
+  // createReservation,
   getFlightById,
+  // getReservationsByUser,
 };

@@ -3,7 +3,7 @@ import React from "react";
 import { formatTimeDifference } from "../../../../utils/formatDates";
 import { LightLateGrey } from "../../../../assets/colors";
 
-const PassengersFares = ({ flight, date, flights, price }) => {
+const PassengersFares = ({ flight, date, flights, price, isReturn }) => {
   const passengerFares = Object.entries(flights?.passengerCounts)
     .filter(([_, count]) => count !== "0")
     .map(([passengerType, count]) => (
@@ -73,7 +73,7 @@ const PassengersFares = ({ flight, date, flights, price }) => {
           >
             <Grid item>
               <Typography variant="body1">
-                Price for the departure flight:
+                Price for the {isReturn ? "return" : "departure"} flight:
               </Typography>
             </Grid>
             <Grid

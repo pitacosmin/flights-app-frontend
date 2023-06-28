@@ -59,6 +59,12 @@ const SearchFlight = () => {
   }, []);
 
   useEffect(() => {
+    if (departureDate > returnDate) {
+      setReturnDate(null);
+    }
+  }, [departureDate, returnDate]);
+
+  useEffect(() => {
     const fetchDestinations = async () => {
       if (selectedOriginIataCode) {
         const airportsData = await getDestinationsByOrigin(
@@ -69,6 +75,8 @@ const SearchFlight = () => {
 
       setDestinationValue(null);
       setSelectedDestinationIataCode("");
+      setDepartureDate(null);
+      setReturnDate(null);
       return setDestinations([]);
     };
     fetchDestinations();
@@ -89,6 +97,8 @@ const SearchFlight = () => {
         setReturnDatesData(returnDatesData);
       }
     };
+    setDepartureDate(null);
+    setReturnDate(null);
     fetchCalendarDates();
   }, [selectedOriginIataCode, selectedDestinationIataCode]);
 

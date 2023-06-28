@@ -1,6 +1,6 @@
 import { Button, Grid, Paper } from "@mui/material";
 import React from "react";
-import PersonIcon from "@mui/icons-material/Person";
+import Passengers from "../../assets/passengers.png";
 
 const PassengerButton = ({
   passengers,
@@ -15,8 +15,17 @@ const PassengerButton = ({
           variant="filledTonal"
           fullWidth
           onClick={handlePassengersOpen}
-          style={{ textTransform: "none" }}
-          endIcon={<PersonIcon />}
+          style={{
+            textTransform: "none",
+            border: "solid 2px lightgrey",
+          }}
+          endIcon={
+            <img
+              src={Passengers}
+              alt="passengers-icon"
+              style={{ maxHeight: "30px", maxWidth: "30px" }}
+            />
+          }
         >
           <Grid container>
             <Grid item container>
