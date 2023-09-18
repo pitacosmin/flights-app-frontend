@@ -28,7 +28,7 @@ const DateSelection = ({
             <Divider flexItem style={{ backgroundColor: "black" }} />
             <Calendar
               onChange={(item) => setDepartureDate(item)}
-              minDate={new Date()}
+              // minDate={new Date()}
               date={departureDate}
               disabledDates={disabledDepartureDates}
               dateDisplayFormat="d MMM yyyy"
@@ -55,7 +55,7 @@ const DateSelection = ({
             <Calendar
               onChange={(item) => setReturnDate(item)}
               date={returnDate}
-              minDate={departureDate ? new Date(departureDate) : new Date()}
+              // minDate={departureDate ? new Date(departureDate) : new Date()}
               disabledDates={disabledArrivalDates}
               dateDisplayFormat="d MMM yyyy"
               weekStartsOn={1}
